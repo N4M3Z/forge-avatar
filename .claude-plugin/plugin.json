@@ -1,0 +1,6 @@
+{
+  "name": "load-avatar",
+  "version": "0.1.0",
+  "description": "Digital avatar — loads your identity, preferences, and goals into AI sessions. Scaffold included for creating your own avatar.",
+  "author": { "name": "N4M3Z" }
+}
