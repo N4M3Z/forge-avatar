@@ -1,3 +1,12 @@
 name: forge-avatar
-version: 0.1.0
-description: Digital avatar — loads identity, preferences, and goals into AI sessions at SessionStart
+version: 0.2.0
+description: Digital avatar loader. USE WHEN you need identity, preferences, or goals context.
+events:
+  - SessionStart
+metadata:
+  name: [name, title]
+  description: description
+
+# External steering paths — override in config.yaml (gitignored).
+steering: []
+  # - /path/to/your/steering/directory/
