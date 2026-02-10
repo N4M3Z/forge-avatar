@@ -4,7 +4,7 @@ aliases: []
 tags:
 keywords:
   - "[[Topic]]"
-context: What prompted this decision
+context: What prompted this imperative
 decision: What was decided
 rationale: Why this approach was chosen
 status: Active

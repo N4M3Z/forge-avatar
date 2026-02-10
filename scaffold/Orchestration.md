@@ -16,8 +16,8 @@ Your AI control plane — identity, preferences, goals, memory, agents, and patt
 
 ## Memory
 
-- `Memory/Decisions/` — decision records with context, rationale, status
-- `Memory/Learnings/` — learning records with origin, insight, actionable rule
+- `Memory/Imperatives/` — imperative records with context, rationale, status (alias: Decisions)
+- `Memory/Insights/` — insight records with origin, finding, actionable rule
 - `Memory/Ideas/` — idea records with spark, description, status
 
 ## Agents

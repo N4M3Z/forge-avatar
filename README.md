@@ -20,7 +20,7 @@ Beyond the core three, your avatar can include:
 
 - **Agents/** — specialist personas (researcher, reviewer, logger)
 - **Patterns/** — reusable prompt templates with `{input}` placeholders
-- **Memory/** — decisions, learnings, and ideas accumulated over time
+- **Memory/** — imperatives, insights, and ideas accumulated over time
 - **Backlog.md** — persistent task list across sessions
 
 The actual content lives in your workspace — never in this plugin. The plugin provides the framework; you fill it with your life.
@@ -61,8 +61,8 @@ The actual content lives in your workspace — never in this plugin. The plugin 
 |----------|---------|
 | `Templates/Agent.md` | Specialist persona with role, expertise, personality, instructions, constraints |
 | `Templates/Pattern.md` | Prompt template with system prompt, instructions, output format, `{input}` |
-| `Templates/Decision.md` | Decision record with context, rationale, status |
-| `Templates/Learning.md` | Learning record with origin, insight, actionable rule |
+| `Templates/Imperative.md` | Imperative record with context, rationale, status |
+| `Templates/Insight.md` | Insight record with origin, finding, actionable rule |
 | `Templates/Idea.md` | Idea record with spark, description, status tracking |
 
 ### Agents (universal, work for anyone)
@@ -78,8 +78,8 @@ The actual content lives in your workspace — never in this plugin. The plugin 
 
 ### Memory (empty directories, schemas in Templates)
 
-- `Memory/Decisions/` — Individual decision files
-- `Memory/Learnings/` — Individual learning files
+- `Memory/Imperatives/` — Individual imperative files
+- `Memory/Insights/` — Individual insight files
 - `Memory/Ideas/` — Individual idea files
 
 ## Platform setup
@@ -133,8 +133,8 @@ Copy `Templates/Pattern.md`, define system prompt, instructions, and output form
 ### Adding memory
 
 As you work, the AI (or you) creates files in `Memory/`:
-- Decisions go in `Memory/Decisions/YYYY-MM-DD — Title.md`
-- Learnings go in `Memory/Learnings/YYYY-MM-DD — Title.md`
+- Imperatives go in `Memory/Imperatives/YYYY-MM-DD — Title.md`
+- Insights go in `Memory/Insights/YYYY-MM-DD — Title.md`
 - Ideas go in `Memory/Ideas/YYYY-MM-DD — Title.md`
 
 These accumulate over time and can be searched by future sessions.
