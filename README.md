@@ -1,10 +1,14 @@
-# load-avatar
+# forge-avatar
 
 Your digital avatar — the markdown files that tell AI tools who you are, what you prefer, and what you're working toward.
 
-When an AI session starts, the loader reads your avatar files and injects them as context. The AI then operates as your digital representative: aligned with your goals, following your preferences, remembering your decisions.
+When an AI session starts, forge-avatar reads your identity files and injects them as context. The AI then operates as your digital representative: aligned with your goals, following your preferences, remembering your decisions.
 
 Think of it as **dotfiles for AI identity**. Just as `.bashrc` configures your shell, avatar files configure your AI environment.
+
+## Layer
+
+**Identity** — the first of forge-core's three layers (Identity / Behaviour / Knowledge). Loaded once at session start via the `SessionStart` hook.
 
 ## What is an avatar?
 
@@ -23,7 +27,7 @@ Beyond the core three, your avatar can include:
 - **Memory/** — imperatives, insights, and ideas accumulated over time
 - **Backlog.md** — persistent task list across sessions
 
-The actual content lives in your workspace — never in this plugin. The plugin provides the framework; you fill it with your life.
+The actual content lives in your workspace — never in this module. The module provides the loading framework; you fill it with your life.
 
 ## Quick start
 
@@ -44,7 +48,7 @@ The actual content lives in your workspace — never in this plugin. The plugin 
 
 4. Test the loader:
    ```bash
-   bash load-avatar.sh
+   bash hooks/session-start.sh
    ```
 
 ## File reference
@@ -82,32 +86,17 @@ The actual content lives in your workspace — never in this plugin. The plugin 
 - `Memory/Insights/` — Individual insight files
 - `Memory/Ideas/` — Individual idea files
 
-## Platform setup
+## Configuration
 
-### Claude Code
+**module.yaml** — checked into git:
 
-```bash
-# Local testing
-claude --plugin-dir ./Plugins/load-avatar
-
-# Install from marketplace
-/plugin install load-avatar@forge-plugins
+```yaml
+name: forge-avatar
+version: 0.2.0
+description: Digital avatar loader. USE WHEN you need identity, preferences, or goals context.
+events:
+  - SessionStart
 ```
-
-### OpenCode
-
-Add to `opencode.json`:
-```json
-{
-  "hooks": {
-    "session_start": "bash /path/to/load-avatar.sh"
-  }
-}
-```
-
-### Generic
-
-Any AI tool that supports session-start hooks can run `load-avatar.sh`. The script outputs structured markdown to stdout. Pipe or inject however your tool expects context.
 
 ## Environment variables
 
@@ -121,11 +110,6 @@ Any AI tool that supports session-start hooks can run `load-avatar.sh`. The scri
 
 Copy `Templates/Agent.md`, fill in the role, expertise, personality, and instructions. Save to `Agents/YourAgent.md`.
 
-Domain-specific agents you might create (not shipped — these are personal):
-- **Daily Logger** — formats voice/text into structured journal entries
-- **Vault Organizer** — manages file organization and naming conventions
-- **Weekly Reviewer** — generates weekly summaries from daily logs
-
 ### Adding patterns
 
 Copy `Templates/Pattern.md`, define system prompt, instructions, and output format. Save to `Patterns/YourPattern.md`. Always include `{input}` where the user's content goes.
@@ -133,8 +117,8 @@ Copy `Templates/Pattern.md`, define system prompt, instructions, and output form
 ### Adding memory
 
 As you work, the AI (or you) creates files in `Memory/`:
-- Imperatives go in `Memory/Imperatives/YYYY-MM-DD — Title.md`
-- Insights go in `Memory/Insights/YYYY-MM-DD — Title.md`
-- Ideas go in `Memory/Ideas/YYYY-MM-DD — Title.md`
+- Imperatives go in `Memory/Imperatives/Title.md`
+- Insights go in `Memory/Insights/Title.md`
+- Ideas go in `Memory/Ideas/Title.md`
 
 These accumulate over time and can be searched by future sessions.
