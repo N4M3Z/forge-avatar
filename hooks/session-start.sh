@@ -2,11 +2,9 @@
 # SessionStart: load digital avatar (identity, preferences, goals).
 set -euo pipefail
 
-# Configurable paths (environment variables with sensible defaults)
-AVATAR_ROOT="${AVATAR_ROOT:-$HOME/Data/Vaults/Personal/Orchestration}"
-
-# Guard: skip if avatar root doesn't exist
-[ -d "$AVATAR_ROOT" ] || exit 0
+# Guard: skip if orchestration directory doesn't exist
+ORCH="${FORGE_USER_ROOT:-$HOME/Data/Vaults/Personal}/Orchestration"
+[ -d "$ORCH" ] || exit 0
 
 # Source strip_front: forge-core shared lib > inline fallback
 if [ -n "${FORGE_LIB:-}" ] && [ -f "$FORGE_LIB/strip-front.sh" ]; then
@@ -24,10 +22,10 @@ elif ! type strip_front &>/dev/null; then
 fi
 
 for file in Identity.md Preferences.md Goals.md; do
-  if [ -f "$AVATAR_ROOT/$file" ]; then
+  if [ -f "$ORCH/$file" ]; then
     section="${file%.md}"
     echo "## $section"
-    strip_front "$AVATAR_ROOT/$file"
+    strip_front "$ORCH/$file"
     echo
   fi
 done

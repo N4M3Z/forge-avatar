@@ -29,10 +29,10 @@ claude plugin install /path/to/forge-avatar
 Set `AVATAR_ROOT` if your avatar files aren't at the default path:
 
 ```bash
-export AVATAR_ROOT="$HOME/my-workspace/Orchestration"
+export FORGE_USER_ROOT="$HOME/my-workspace"
 ```
 
-Default: `$HOME/Data/Vaults/Personal/Orchestration`
+Default fallback: `$HOME/Data/Vaults/Personal` (hardcoded in script)
 
 ### Disable SessionStart hook
 

@@ -102,7 +102,7 @@ events:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `AVATAR_ROOT` | `$HOME/Data/Vaults/Personal/Orchestration` | Root directory containing avatar files |
+| `FORGE_USER_ROOT` | (set by forge-core dispatch) | User content root; avatar reads `$FORGE_USER_ROOT/Orchestration/` |
 
 ## Extending your avatar
 
