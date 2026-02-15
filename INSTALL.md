@@ -10,7 +10,7 @@ Add as a submodule:
 git submodule add https://github.com/N4M3Z/forge-avatar.git Modules/forge-avatar
 ```
 
-Then add the module to `forge.yaml` under the SessionStart event.
+Then add the module to `defaults.yaml` under the SessionStart event.
 
 ## Standalone (Claude Code plugin)
 
