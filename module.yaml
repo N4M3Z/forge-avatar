@@ -1,6 +1,6 @@
 name: forge-avatar
-version: 0.2.0
-description: Digital avatar loader. USE WHEN you need identity, preferences, or goals context.
+version: 0.3.0
+description: Digital avatar loader — identity, self-knowledge, goals. USE WHEN you need identity, preferences, goals, or self-knowledge context.
 events:
   - SessionStart
 metadata:

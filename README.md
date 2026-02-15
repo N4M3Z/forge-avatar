@@ -12,13 +12,20 @@ Think of it as **dotfiles for AI identity**. Just as `.bashrc` configures your s
 
 ## What is an avatar?
 
-Three core files define your avatar:
+Your avatar is defined by two core identity files plus eight self-knowledge directories (one file per item, inspired by the TELOS framework):
 
 | File | Purpose |
 |------|---------|
 | `Identity.md` | Who you are — background, role, expertise, interests |
 | `Preferences.md` | How you communicate — code style, decision-making principles |
-| `Goals.md` | What you're working toward — active objectives, principles |
+| `Goals.md` | Mission and active objectives, principles |
+| `Faultlines.md` | Civilization-level tensions driving mission (FL1–FL4) |
+| `Beliefs.md` | Core convictions and values (B1–B12) |
+| `Strategies.md` | Approaches to problem-solving (S1–S6) |
+| `Models.md` | Mental frameworks for decision-making (MD1–MD7) |
+| `Narratives.md` | Elevator pitch and self-description (draft) |
+| `Challenges.md` | Personal obstacles and operational constraints (C1–C9) |
+| `Frames.md` | Decision lenses applied contextually (F1–F5) |
 
 Beyond the core three, your avatar can include:
 
@@ -57,7 +64,17 @@ The actual content lives in your workspace — never in this module. The module 
 
 - **Identity.md** — Name, background, current role, expertise, interests. This is what the AI reads first.
 - **Preferences.md** — Communication style, code conventions, decision-making principles. Shapes how the AI interacts with you.
-- **Goals.md** — Active objectives, completed goals, guiding principles. Gives the AI direction.
+- **Goals.md** — Mission, active objectives, completed goals, guiding principles. Gives the AI direction.
+
+### Self-knowledge directories (loaded at session start, one file per item)
+
+- **Faultlines/** — Civilization-level tensions driving mission and values (FL1–FL4). The big problems worth caring about.
+- **Beliefs.md** — Core convictions and values (B1–B12). Non-negotiable principles that shape decisions.
+- **Strategies.md** — Approaches to solving problems (S1–S6). How you attack challenges.
+- **Models.md** — Mental frameworks for decision-making (MD1–MD7). First principles, systems thinking, Pareto, Range-Frequency Theory.
+- **Narratives.md** — How you describe yourself to the world (draft). Elevator pitch, identity framing.
+- **Challenges/** — Personal obstacles and operational constraints (C1–C9). Where Faultlines and life circumstances meet daily reality.
+- **Frames.md** — Decision lenses (F1–F5). Contextual perspectives for evaluating choices.
 
 ### Templates (scaffolds for creating new items)
 
@@ -92,8 +109,8 @@ The actual content lives in your workspace — never in this module. The module 
 
 ```yaml
 name: forge-avatar
-version: 0.2.0
-description: Digital avatar loader. USE WHEN you need identity, preferences, or goals context.
+version: 0.3.0
+description: Digital avatar loader — identity, self-knowledge, goals. USE WHEN you need identity, preferences, goals, or self-knowledge context.
 events:
   - SessionStart
 ```
@@ -102,7 +119,7 @@ events:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `FORGE_USER_ROOT` | (set by forge-core dispatch) | User content root; avatar reads `$FORGE_USER_ROOT/Orchestration/` |
+| `FORGE_USER_ROOT` | (set by forge-core dispatch) | User content root; avatar reads `$FORGE_USER_ROOT/Resources/Avatar/` |
 
 ## Extending your avatar
 
