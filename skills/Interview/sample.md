@@ -57,42 +57,61 @@ Expertise: backend systems, payment integrations, zero-downtime migrations, team
 
 ---
 
-# Sample: Interview Brief
+# Sample: Interview Brief (Knowledge Triage)
 
-> Output of `/Interview billing migration risks` — pasted as a conversation message.
+> Output of `/Interview knowledge items for promotion triage` — pasted as a conversation message.
+> Demonstrates curating many source items into substantive summaries.
 > PII anonymized (user chose "anonymize" for shared brief).
 
 ---
 
-# Interview: Billing Migration Risks
+# Interview: Knowledge Promotion Triage
+
+## Who You Are Talking To
+
+Software engineer building a personal knowledge infrastructure. The system has three memory types: Insights (factual findings), Imperatives (architectural decisions), and Ideas (proposals). Items accumulate and need periodic promotion to actionable artifacts — steering rules, skills, scripts, or auto-memory. The user has 45 unpromoted items and needs to triage the highest-leverage ones during a walk.
+
+Direct, concise, wants decisions not discussion. Push back if answers are vague.
 
 ## Background Context
 
-### Migration Status
-Core billing flows live on the new platform for new signups. Legacy user migration phased by plan tier, with enterprise accounts scheduled for Q2. Team has capacity constraints: 4 backend engineers, one on leave returning next month.
+### Ideas Ready to Archive (3 items)
 
-### Previous Retrospective (Imperative)
-Decision from last quarter: migration planning should be time-boxed to one week, not spread across a month. Extended planning creates analysis paralysis.
+Three ideas are already shipped and can be archived: (1) a CLI tool for resolving database views — built and deployed as the `db-resolve` binary three months ago; (2) a journal plugin consolidation — shipped as the `journal-tools` module, all legacy scripts retired; (3) a template framework — shipped in the identity module, templates now auto-generate from config.
 
-### Team Capacity Insight
-The team consistently overcommits by 20-30% when estimating quarterly scope. Actual throughput is ~70% of planned story points across three consecutive quarters.
+### Exploring Ideas (4 items)
+
+Four ideas are under active investigation: (1) Email pipeline — batch import from work email into the knowledge system via CLI tool, relevant because of the user's Tuesday/Wednesday/Friday work schedule; (2) Proactive digest module — auto-surfaces forgotten items at session start, phases 1-3 done (retrieval, ranking, formatting), phases 4-5 remaining (filtering, scheduling); (3) Message archive import — batch export chat messages into the knowledge pipeline, blocked on API access; (4) Platform decoupling — separate platform-specific integrations into standalone modules, motivated by supporting 4 different AI tools.
+
+### Imperative Cluster: Skills Architecture (5 overlapping decisions)
+
+Five imperatives say related things: (1) skills use a canon+sidecar pattern where the canonical version lives in the module and a sidecar draft lives in the vault for editing; (2) two directories exist — Upstream for shared skills, Local for personal ones; (3) agents reference skills as their single source of truth rather than duplicating instructions; (4) the vault is the source of truth, not generated adapter configs; (5) promotion from vault draft to module skill is a script with an AI wrapper. These overlap — the core principle is "skills are authoritative, vault-first, with scripted promotion."
+
+### Recent Insights Cluster: Plugin Permissions (3 items, last 48 hours)
+
+Three insights about plugin environment constraints discovered this week: (1) the plugin root env var is the only guaranteed variable — all other paths must be derived from it; (2) backtick command execution in plugin context is blocked by the permission check, making dynamic shell calls unreliable; (3) environment variables set by the host tool are available but vary by platform. Together these form a single "plugin permission constraints" rule.
+
+### Foundational Insight: Configuration as Routing
+
+A recent insight that frontmatter metadata (not folder structure) determines how items are routed, processed, and displayed. This is foundational — it implies folder reorganizations are cosmetic while frontmatter changes are semantic. Currently just an insight note but may warrant promotion to a steering rule.
 
 ## Interview Guide
 
 ### Goal
-Identify the top 3 risks to the Q2 migration phase and decide on mitigation strategies for each. Output should be concrete enough to present to stakeholders.
+Triage the user's 45 knowledge items into: promote now, keep for later, merge with related items, or archive. Focus on the 5 highest-leverage decisions. Produce a concrete action list.
 
 ### Key Questions
-1. Given the team delivers 70% of planned scope, what happens if you plan for 70% from the start — what would you cut?
-2. The enterprise tier is the most complex migration. What's the one thing that could derail it?
-3. If a critical team member is unavailable mid-migration, what's the fallback?
-4. Are there dependencies on other teams that could block progress?
-5. What's the rollback strategy if the enterprise migration hits a showstopper?
+1. The 3 shipped ideas (CLI resolver, journal consolidation, template framework) are all deployed and working. Any open threads, or archive all three now?
+2. Of the 4 Exploring ideas — email pipeline, proactive digest (60% done), message archive (blocked on API), platform decoupling — which one would you push forward next, and why?
+3. The Skills Architecture cluster has 5 overlapping imperatives that boil down to "skills are authoritative, vault-first, with scripted promotion." Is that the right single rule, or does something need to be different?
+4. The 3 plugin permission insights from this week (root env var only, backtick blocked, platform-varying env) — should these consolidate into one "plugin constraints" steering rule now, or wait for more data?
+5. "Configuration as routing" feels foundational — if frontmatter is the routing layer, folder structure is cosmetic. Should this become a steering rule that guides future architecture decisions?
 
 ### Communication Style
 - Ask one question at a time, wait for the answer
 - Push back if answers are vague — ask for specifics
-- Summarize each topic before moving to the next
+- Summarize each decision before moving to the next topic
+- When the user says "promote" — ask what destination (steering rule, skill, script, auto-memory)
 - Capture ideas that emerge naturally — tag them for later
 
 ## Output Specification
@@ -100,19 +119,21 @@ Identify the top 3 risks to the Q2 migration phase and decide on mitigation stra
 When the interview concludes, produce a summary in this exact format:
 
 ### Decisions
-- D1: <decision statement> — Rationale: <why> — Action: <next step>
+- D1: <decision about a knowledge item> — Rationale: <why> — Action: <promote to X / archive / merge with Y / dismiss>
 
 ### Insights
-- I1: <factual finding or learning> — Origin: <what prompted this>
+- I1: <new learning from the triage itself> — Origin: <what prompted this>
 
 ### Ideas
-- IDEA1: <idea title> — <one-line description>
+- IDEA1: <any new ideas that emerged> — <description>
 
 ### Updated Beliefs
-- <existing ID, e.g. B5>: <revised statement> — Changed from: <previous version>
+- <ID>: <revised statement if any beliefs shifted> — Changed from: <previous>
 
 ### Action Items
-- [ ] <task> — <owner or context>
+- [ ] <specific promotion task> — <which items, which destination>
+- [ ] <merge task> — <which cluster, what the consolidated rule says>
+- [ ] <archive task> — <which items to archive>
 
 ### Raw Notes
 <Anything else notable from the conversation>

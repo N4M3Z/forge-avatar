@@ -69,43 +69,59 @@ Ask two questions:
 - **Project file uploaded**: Skip the avatar summary entirely. The interview brief only needs topic-specific content — the voice AI already knows who you are.
 - **No project file**: Read `Identity.md` and `Preferences.md` from `Resources/Avatar/` via `safe-read`. Scan avatar subdirectories (Goals, Beliefs, Strategies, Challenges, Faultlines, Models, Narratives, Frames) but only include items relevant to the topic. Target: 150-300 words of avatar summary. Strip all frontmatter and wikilinks — convert `[[Note Name]]` to plain `Note Name`.
 
-### Step 2: Search vault for topic context
+### Step 2: Search vault and read matching content
 
-Search these locations for content matching the topic keywords:
+Two passes — search first, then read. **Every item that makes it into the brief must have its content read, not just its filename.**
+
+**Pass 1 — Search**: Find matching files across these locations:
 
 | Location | Tool | What to look for |
 |----------|------|------------------|
-| `Orchestration/Memory/Insights/` | Grep + safe-read | Insights related to the topic |
-| `Orchestration/Memory/Imperatives/` | Grep + safe-read | Decisions related to the topic |
-| `Orchestration/Memory/Ideas/` | Grep + safe-read | Open ideas related to the topic |
+| `Orchestration/Memory/Insights/` | Grep | Insights related to the topic |
+| `Orchestration/Memory/Imperatives/` | Grep | Decisions related to the topic |
+| `Orchestration/Memory/Ideas/` | Grep | Open ideas related to the topic |
 | `Orchestration/Backlog.md` | safe-read + scan | Backlog items mentioning the topic |
 | Recent daily journals (last 7 days) | safe-read | Journal entries mentioning the topic |
 | Vault-wide | Grep (filenames) | Project notes, reference material matching topic |
 
 Follow wikilinks found in matching content (one hop only) if they look relevant.
 
+**Pass 2 — Read and summarize**: For every matched file, `safe-read` the full content and extract a 2-4 sentence summary capturing: what was decided/learned/proposed, why it matters, and current status. Titles alone are never sufficient — the voice AI has no vault access, so everything it needs to discuss must be in the brief.
+
+**Cap at 15-20 items**. If the search returns more, curate the most relevant subset. Depth beats breadth — 15 well-summarized items are worth more than 50 titles.
+
 ### Step 3: Present findings and refine scope
 
-Show the user what was found:
+Show the user a summary of **what was found and what the brief will contain** — not just counts, but the actual items with one-line summaries so the user can confirm scope:
 
 ```
-Found context for "Q2 planning":
+Found context for "Q2 planning" — 8 items for the brief:
 
-  Avatar: 3 goals, 2 challenges, 1 strategy
-  Insights: 2 matching (planning cadence, team capacity)
-  Imperatives: 1 matching (quarterly review process)
-  Ideas: 1 open (cross-team sync ritual)
-  Backlog: 3 items tagged Q2
-  Journal: 2 recent entries
+  Insights:
+  - Team capacity overcommit: team delivers ~70% of planned scope consistently
+  - Planning cadence shift: weekly standups replaced by async daily updates
+
+  Imperatives:
+  - Quarterly review process: time-box planning to one week, not spread across a month
+
+  Ideas:
+  - Cross-team sync ritual: proposed bi-weekly alignment meeting with platform team
+
+  Backlog: 3 items tagged Q2 (kickoff scheduling, OKR draft, capacity planning)
+  Journal: 2 recent entries (retrospective notes, headcount discussion)
 
   Anything to add or remove? Specific [[wikilinks]] or file paths?
 ```
 
-The user may add specific notes, remove irrelevant hits, or adjust the scope.
+The user may add specific notes, remove irrelevant hits, or adjust the scope. Items removed here won't appear in the brief.
 
 ### Step 4: Design the interview guide
 
-Based on the gathered context, draft 5-8 topic-specific questions for the interview guide. These should reference actual content gaps, contradictions, decision points, or areas needing the user's input — not generic questions.
+Based on the gathered context, draft 5-8 topic-specific questions for the interview guide. Each question must:
+
+- **Embed the context it references** — the voice AI can't look anything up, so the question itself must contain enough detail for a meaningful discussion. Bad: "The Skills Architecture cluster has 5 imperatives. What replaces them?" Good: "You have 5 overlapping imperatives about skills: (1) skills use canon+sidecar pattern for upstream portability, (2) two directories — Upstream for shared, Skills for local, (3) agents reference skills as single source of truth, (4) vault is the source of truth not adapters, (5) promotion/drafting are scripts with AI wrappers. These overlap heavily — what's the single rule?"
+- **Reference actual content**, not just titles — cite specific numbers, dates, statuses, or findings from the items read in Step 2
+- **Target decision points** — contradictions, outdated items, merge candidates, or promotion-ready items
 
 Present the draft questions to the user. They may adjust, reorder, add, or remove questions. This is where the user's domain knowledge shapes the interview.
 
@@ -115,8 +131,9 @@ Assemble the four-section document (see [Output Format](#output-format)). Apply 
 
 - **Strip all frontmatter** from included content
 - **Convert wikilinks** to plain text (`[[Note]]` becomes `Note`)
-- **Summarize, don't copy** — one paragraph per source file, not verbatim
-- **Enforce word budget** — total document under 2000 words. If context exceeds this, prioritize: avatar summary > interview guide > most relevant background > remaining background
+- **Substantive summaries, not titles** — every item in the Background Context section must be a paragraph (2-4 sentences) capturing the what, why, and current status. A list of titles is a failure mode — the voice AI cannot discuss items it knows nothing about.
+- **Enforce word budget** — total document under 2000 words. If context exceeds this, **cut items, don't shorten summaries**. 10 well-described items beat 30 titles. Prioritize: interview guide (with embedded context) > most relevant background > avatar summary > remaining background
+- **Questions are self-contained** — each interview question must include enough inline context that the voice AI can discuss it without referring back to the Background section. Redundancy between Background and Interview Guide is acceptable and expected.
 - **Plain text only** — no Obsidian syntax, no YAML, no code blocks in the background section
 
 ### Step 6: Write and report
@@ -264,7 +281,10 @@ Omit this section entirely when the project file is active.>
 
 <Summarized vault content about the topic.
 Each source as a short subsection with a descriptive heading.
-One paragraph per source. Plain text.>
+One SUBSTANTIVE paragraph per source (2-4 sentences: what, why, current status).
+Never list titles without summaries — the voice AI has no vault access.
+Group related items into single entries rather than listing separately.
+Plain text.>
 
 ## Interview Guide
 
@@ -272,9 +292,10 @@ One paragraph per source. Plain text.>
 <What this session should accomplish — 2-3 sentences.>
 
 ### Key Questions
-1. <Topic-specific question referencing actual content>
-2. <Question about a gap or contradiction found>
-3. <Question about a decision that needs to be made>
+1. <Question with embedded context — include enough detail that the voice AI
+   can discuss it without looking anything up>
+2. <Question about a gap or contradiction found — cite the specific data>
+3. <Question about a decision — state the options and tradeoffs inline>
 ...up to 8 questions
 
 ### Communication Style
@@ -318,6 +339,8 @@ When the interview concludes, produce a summary in this exact format:
 - Output file always goes to `Scratch/` (ephemeral, gitignored)
 - The Process workflow never auto-writes — always present reconciliation table first
 - If topic search finds nothing relevant, ask the user for specific files or wikilinks rather than producing an empty brief
+- **Content density over coverage** — the voice AI has no vault access. Everything it needs to discuss must be in the brief with enough substance to hold a conversation. Never list titles without summaries. Never reference content that isn't included. If you can't fit substantive summaries within the word budget, include fewer items — not thinner summaries
+- **Cap brief items at 15-20** — if the search finds more matches, curate the most relevant subset. Group related items (e.g., "5 imperatives about skills architecture") into a single entry with all the detail inline, rather than listing 5 separate titles
 - Include avatar context filtered by topic relevance, not the full export
 - Decision/Insight/Idea IDs (D1, I1, IDEA1) are session-local — distinct from avatar IDs (B1, FL3)
 - The interview document is platform-agnostic — one format for Claude, ChatGPT, Gemini, or any voice AI
