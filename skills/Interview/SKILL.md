@@ -86,7 +86,7 @@ Two passes — search first, then read. **Every item that makes it into the brie
 
 Follow wikilinks found in matching content (one hop only) if they look relevant.
 
-**Pass 2 — Read and summarize**: For every matched file, `safe-read` the full content and extract a 2-4 sentence summary capturing: what was decided/learned/proposed, why it matters, and current status. Titles alone are never sufficient — the voice AI has no vault access, so everything it needs to discuss must be in the brief.
+**Pass 2 — Read and summarize**: For every matched file, `safe-read` the full content and extract a 2-4 sentence summary (20 content words minimum — excluding a, the, and, or, of, in, to, for, is, it) capturing: what was decided/learned/proposed, why it matters, and current status. Titles alone are never sufficient — the voice AI has no vault access, so everything it needs to discuss must be in the brief.
 
 **Cap at 15-20 items**. If the search returns more, curate the most relevant subset. Depth beats breadth — 15 well-summarized items are worth more than 50 titles.
 
@@ -131,7 +131,7 @@ Assemble the four-section document (see [Output Format](#output-format)). Apply 
 
 - **Strip all frontmatter** from included content
 - **Convert wikilinks** to plain text (`[[Note]]` becomes `Note`)
-- **Substantive summaries, not titles** — every item in the Background Context section must be a paragraph (2-4 sentences) capturing the what, why, and current status. A list of titles is a failure mode — the voice AI cannot discuss items it knows nothing about.
+- **Substantive summaries, not titles** — every item in the Background Context section must be a paragraph (2-4 sentences, 20 content words minimum — excluding a, the, and, or, of, in, to, for, is, it) capturing the what, why, and current status. A list of titles is a failure mode — the voice AI cannot discuss items it knows nothing about.
 - **Enforce word budget** — total document under 2000 words. If context exceeds this, **cut items, don't shorten summaries**. 10 well-described items beat 30 titles. Prioritize: interview guide (with embedded context) > most relevant background > avatar summary > remaining background
 - **Questions are self-contained** — each interview question must include enough inline context that the voice AI can discuss it without referring back to the Background section. Redundancy between Background and Interview Guide is acceptable and expected.
 - **Plain text only** — no Obsidian syntax, no YAML, no code blocks in the background section
@@ -281,7 +281,7 @@ Omit this section entirely when the project file is active.>
 
 <Summarized vault content about the topic.
 Each source as a short subsection with a descriptive heading.
-One SUBSTANTIVE paragraph per source (2-4 sentences: what, why, current status).
+One SUBSTANTIVE paragraph per source (2-4 sentences, 20 content words minimum: what, why, current status).
 Never list titles without summaries — the voice AI has no vault access.
 Group related items into single entries rather than listing separately.
 Plain text.>
