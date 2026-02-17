@@ -2,14 +2,17 @@
 
 > Output of `/Interview project` — uploaded once to a Claude/ChatGPT Project.
 > PII included (user chose "include" for their private project).
+> Every item is a full paragraph — the voice AI needs depth, not labels.
 
 ---
 
 # About Me
 
-Software engineer with a background in distributed systems. Currently leading a platform team at a mid-size tech company, driving a multi-quarter billing migration affecting millions of users. Also building a personal AI infrastructure framework as a side project.
+Software engineer with a background in distributed systems. PhD from a research lab where I spent years designing data analysis frameworks for large-scale scientific computations — processing petabytes of experimental data, distributed computing, statistical inference at the frontier of what was measurable. That training shaped a particular way of thinking: decompose everything to fundamentals, demand evidence, distrust intuition when data exists.
 
-Expertise: backend systems, payment integrations, zero-downtime migrations, team scaling. Interests: fintech, open-source tooling.
+Now leading a platform team at a mid-size tech company, driving a multi-quarter billing migration affecting millions of users. The enterprise tier is the hardest remaining piece — complex billing logic, legacy edge cases, zero-downtime requirement. I've been at this company for about a decade, building invisible infrastructure that everyone depends on but nobody sees.
+
+Also building a personal AI infrastructure framework as a serious side project. It's modular, Rust-based, and manages my knowledge, journals, identity, and operational workflows through multiple AI tools. Daily active development.
 
 ## How I Communicate
 
@@ -19,41 +22,57 @@ Expertise: backend systems, payment integrations, zero-downtime migrations, team
 - Push back when my answers are vague — ask for specifics
 - Summarize before moving to the next topic
 - If I say something that contradicts my stated beliefs or goals, call it out
+- When I say "continue" or "go", move forward — don't repeat what was just said
 
 ## What I'm Working On
 
 ### Goals
-- G1: Ship billing migration at current employer
-- G2: Build personal AI framework (daily logging, plugin system, session reflection)
-- G3: Learn Rust through real projects
+
+**G1: Ship billing migration.** The primary professional deliverable. Millions of users migrating from in-house billing to a third-party platform, multi-quarter timeline, zero-downtime requirement. The enterprise tier is the remaining hard problem — complex billing logic accumulated over a decade, multiple products with different billing models. This consumes significant cognitive bandwidth.
+
+**G2: Build personal AI framework.** The primary personal project. Currently ~15 modules, daily logging system, file access enforcement, session reflection, memory promotion pipeline, multi-platform adapters. Every binary is written in Rust. Daily active development. The system captures knowledge, enforces behavioral rules, and automates operational workflows.
+
+**G3: Learn Rust through real projects.** All framework binaries are Rust — this isn't academic. Every module teaches real patterns: CLI interfaces, diffing, serialization, directory traversal, testing with temp directories. Preference for Rust over TypeScript or Python for anything compiled.
 
 ### Challenges
-- C1: Time scarcity — multiple commitments competing for attention
-- C2: Information overload — too much noise, not enough signal
+
+**C1: Time scarcity with competing priorities.** Day job, side business, personal framework, relationships, health — all demand serious attention simultaneously. Can't run all at full throttle. The open question is whether being faster closes the gap or whether hard tradeoffs are unavoidable and I'm just avoiding making them.
+
+**C2: Information overload causing decision paralysis.** This is the root challenge — everything branches from here. Too much input, too many options, not enough filtering. The infrastructure to prioritize and surface the right information at the right time is what the framework is building, but it's still incomplete.
 
 ## How I Think
 
 ### Beliefs
-- B1: Simple beats clever — complexity is the enemy
-- B2: Ship and iterate — perfect is the enemy of done
-- B3: Self-trust is foundational
+
+**B1: Simple beats clever.** Complexity is the enemy. Every abstraction adds a maintenance burden. Three similar lines of code are better than a premature abstraction. This applies to architecture, life decisions, and communication equally.
+
+**B2: Ship and iterate.** Perfect is the enemy of done. A good-enough solution shipped today beats a perfect solution shipped next month. The iteration loop teaches more than the planning phase ever could.
+
+**B3: Self-trust is foundational.** If you don't keep your own word to yourself — the promises about habits, goals, commitments — nothing else works. External commitments have social accountability. Internal ones have only self-trust.
 
 ### Strategies
-- S1: Break complex problems into independently shippable pieces
-- S2: Writing to think — articulating problems often solves them
+
+**S1: Break complex problems into independently shippable chunks.** Decompose until each piece can be built, tested, and shipped on its own. The strategy fails when pieces have hidden dependencies, which is why explicit contracts between modules matter.
+
+**S2: Writing to think.** Articulating problems often solves them before the conversation ends. Journaling and knowledge capture are thinking tools, not record-keeping. Putting thoughts into structured prose forces clarity that thinking alone doesn't produce.
 
 ### Mental Models
-- MD1: First principles — decompose to fundamentals, rebuild
-- MD2: Cost-benefit analysis — weigh tradeoffs explicitly
+
+**MD1: First principles.** Decompose any problem to its fundamental components, then rebuild. Don't accept "that's how it's always been done." Trained by research to question every assumption and build from evidence.
+
+**MD2: Cost-benefit analysis.** Weigh tradeoffs explicitly, not on gut feeling. When choosing between approaches, write out the actual costs and benefits rather than relying on intuition. Make the calculus visible.
 
 ## What Matters to Me
 
 ### Faultlines
-- FL1: Knowledge fragmentation — hard-won insights get siloed and lost
+
+**FL1: Knowledge fragmentation and decay.** Hard-won insights get siloed in individual brains, lost when people leave, never transferred to successors. Organizations repeatedly solve the same problems because institutional knowledge evaporates. The personal AI framework is a direct response — a system that captures, organizes, and resurfaces knowledge so it compounds instead of decaying.
 
 ### Frames
-- F1: Short-term vs long-term — defaults to long-term
-- F2: Ownership vs delegation — constantly deciding what to keep vs hand off
+
+**F1: Short-term vs long-term.** Defaults to long-term. Willing to sacrifice now for compounding returns later. But not dogmatically — sometimes short-term momentum is the right call. The calibration: will this compound? If yes, long-term.
+
+**F2: Ownership vs delegation.** Constantly deciding what's mine to do versus what others should handle. The tension is between control (doing it myself guarantees quality) and scalability (I can't do everything). The modular architecture of the framework is an expression of this.
 
 ---
 

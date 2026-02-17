@@ -44,8 +44,9 @@ Assemble a single document following the [Project File Format](#project-file-for
 - **Keep item IDs inline** (e.g., "G2: Ship Chargebee migration") so the voice AI can reference them and they appear in interview output
 - **Organize by section** with clear headings
 - **Include behavioral instructions** — how the voice AI should interact (derived from Preferences.md but expanded for voice)
-- **Target 1000-2000 words** — project context windows are generous, but concise is still better
+- **Target 3000-5000 words** — project context windows are very generous (200K+ tokens). Use the space. Every goal, belief, challenge, strategy, model, faultline, and frame should be a full paragraph (3-5 sentences) with reasoning, origin, connections to other items, and how it applies in practice. One-liner bullet lists are a failure mode — the voice AI needs depth to have meaningful conversations about any topic.
 - **No topic-specific content** — this is the stable baseline, not per-session
+- **Add a "Current Focus" section** — what's actively being worked on this month, with enough context that the voice AI can discuss priorities and tradeoffs
 
 ### Step 4: Write and report
 
@@ -202,64 +203,91 @@ List everything that was created or updated, with full file paths.
 
 ## Project File Format
 
-The persistent context file compiled by the Project workflow:
+The persistent context file compiled by the Project workflow. **Every item is a full paragraph, not a one-liner.** The voice AI needs depth to hold real conversations — a bullet list of labels gives it nothing to work with.
 
 ```
 # About Me
 
-<Full identity: name, background, current role, expertise, interests.
-Expanded from Identity.md — not a summary, the full picture.>
+<Full identity as narrative paragraphs: name, background, current role, expertise,
+interests, work context. Multiple paragraphs. Include enough that someone reading
+this understands who you are, what your days look like, and what drives you.>
+
+## Forge Framework
+
+<If the user builds software/infrastructure, give it its own section.
+Describe the architecture, the key modules, the current state, and
+what problem it solves. Enough for the voice AI to discuss any part.>
 
 ## How I Communicate
 
-<From Preferences.md: communication style, decision-making approach.
-Plus voice-specific additions:>
+<From Preferences.md, expanded for voice-specific context.
+Bullet list is appropriate here — these are instructions, not narratives.>
 
 - I prefer direct, concise exchanges — no filler or flattery
 - Ask one question at a time and wait for my answer
 - Push back when my answers are vague — ask for specifics
 - Summarize before moving to the next topic
 - If I say something that contradicts my stated beliefs, call it out
+- When I say "continue" or "go", move forward — don't repeat
 
 ## What I'm Working On
 
 ### Goals
-- G1: <goal> — <one-line context>
-- G2: <goal> — <one-line context>
-...
+
+**M1: <mission-level goal>.** <Full paragraph: what this means concretely,
+why it matters, what progress looks like, how it connects to faultlines
+or challenges. 3-5 sentences minimum.>
+
+**G1: <operational goal>.** <Full paragraph: current status, key blockers,
+timeline, why it consumes attention. 3-5 sentences.>
+
+### Current Focus (<month year>)
+
+<What's actively being worked on right now. Enough context that the voice AI
+can discuss priorities, tradeoffs, and blockers for any active workstream.>
 
 ### Challenges
-- C1: <challenge>
-...
+
+**C1: <challenge title>.** <Full paragraph: what the challenge actually feels
+like, what's been tried, what the open question is, how it connects to other
+challenges or goals. Not a label — a real description. 3-5 sentences.>
 
 ## How I Think
 
 ### Beliefs
-- B1: <belief>
-- B2: <belief>
-...
+
+**B1: <belief statement>.** <Full paragraph: the reasoning behind the belief,
+where it came from (experience, evidence, mentors), when it applies, how it
+connects to strategies or challenges. 3-5 sentences.>
 
 ### Strategies
-- S1: <strategy>
-...
+
+**S1: <strategy name>.** <Full paragraph: when this strategy is used, what it
+looks like in practice, examples of it working, when it fails. 3-5 sentences.>
 
 ### Mental Models
-- MD1: <model>
-...
+
+**MD1: <model name>.** <Full paragraph: what the model is, how it's applied
+in practice, what decisions it guides. Not a dictionary definition — a
+description of how this person actually uses it. 3-5 sentences.>
 
 ## What Matters to Me
 
 ### Faultlines
-<Civilization-level tensions that drive my mission>
-- FL1: <faultline>
-...
+
+**FL1: <faultline>.** <Full paragraph: what the tension is, why it matters
+personally, how it connects to goals and mission. 3-5 sentences.>
 
 ### Narratives
-- N1: <how I describe what I do>
+
+**N1: <narrative title>.** <Full paragraph: the current narrative, what's
+wrong with it, what the target narrative is, and why the shift matters.>
 
 ### Frames
-- F1: <decision lens I apply>
-...
+
+**F1: <frame name>.** <Full paragraph: what decisions this lens applies to,
+how the default works, when the default gets overridden, example situations.
+3-5 sentences.>
 ```
 
 ---
