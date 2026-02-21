@@ -1,0 +1,23 @@
+# forge-avatar default configuration.
+# Override: create config.yaml (gitignored) with only the fields you want to change.
+
+# Hook events this module handles (Tier 0 — authoritative for dispatch).
+events:
+    - SessionStart
+
+# Skill allowlists (provider-keyed, used by install-skills).
+skills:
+    claude:
+        RefineIdentity:
+        Interview:
+        LoadRefineIdentity:
+
+    gemini:
+        RefineIdentity:
+        Interview:
+        LoadRefineIdentity:
+
+    codex:
+        RefineIdentity:
+        Interview:
+        LoadRefineIdentity:

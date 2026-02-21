@@ -1,6 +1,6 @@
 ---
-name: Avatar
-description: Digital avatar interview, refinement, and export. USE WHEN avatar interview, identity interview, self-knowledge, update avatar, export avatar, import avatar, refine avatar, sharpen avatar. Guided conversation producing structured Avatar/ files.
+name: RefineIdentity
+description: "Refine, interview, and export the user's digital identity — goals, beliefs, challenges, strategies, and self-knowledge. USE WHEN refine identity, sharpen beliefs, interview identity, update goals, export identity, import identity, refine goals, challenge assumptions, identity interview, identity export."
 argument-hint: "[interview | refine | export | import | section-name]"
 ---
 
@@ -124,7 +124,7 @@ Item IDs are **stable** — never renumber across sessions. Add new items at the
 
 ### Step 5: Verify
 
-Run `bash Modules/forge-avatar/hooks/session-start.sh` to confirm all sections load.
+Run `/LoadAvatar` to confirm all self-knowledge sections load correctly via `safe-read`.
 
 ---
 

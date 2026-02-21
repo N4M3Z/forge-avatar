@@ -28,8 +28,7 @@ git config core.hooksPath .githooks       # enable pre-commit hook
 
 All scripts start with `set -euo pipefail`. Aliases for `cd`, `cp`, `mv`, `rm` are intercepted on this system:
 
-- Use `builtin cd` (not `cd`)
-- Use `command cp`, `command mv`, `command rm` (not bare)
+- Use `command cd`, `command cp`, `command mv`, `command rm` (never bare — aliases intercept)
 
 ## Architecture
 

@@ -3,7 +3,7 @@
 # Run: bash tests/test.sh
 set -uo pipefail
 
-MODULE_ROOT="$(builtin cd "$(dirname "$0")/.." && pwd)"
+MODULE_ROOT="$(command cd "$(dirname "$0")/.." && pwd)"
 PASS=0 FAIL=0
 
 # --- Helpers ---
@@ -93,11 +93,11 @@ else
   printf '  FAIL  plugin.json invalid or missing\n'; FAIL=$((FAIL + 1))
 fi
 
-# session-start.sh exists and is executable
-if [ -x "$MODULE_ROOT/hooks/session-start.sh" ]; then
-  printf '  PASS  session-start.sh exists and is executable\n'; PASS=$((PASS + 1))
+# SessionStart.sh exists and is executable
+if [ -x "$MODULE_ROOT/hooks/SessionStart.sh" ]; then
+  printf '  PASS  SessionStart.sh exists and is executable\n'; PASS=$((PASS + 1))
 else
-  printf '  FAIL  session-start.sh missing or not executable\n'; FAIL=$((FAIL + 1))
+  printf '  FAIL  SessionStart.sh missing or not executable\n'; FAIL=$((FAIL + 1))
 fi
 
 # scaffold directory exists
@@ -121,28 +121,33 @@ done
 # ============================================================
 printf '\n--- session-start.sh ---\n'
 
-# With a mock avatar root
+# With a mock avatar root (hook reads FORGE_USER_ROOT, resolves Resources/Avatar/)
 setup
-mkdir -p "$_tmpdir/avatar"
-printf -- '---\ntitle: Test Identity\n---\n\n# Identity\n\nI am a test user.\n' > "$_tmpdir/avatar/Identity.md"
-printf -- '---\ntitle: Test Preferences\n---\n\n# Preferences\n\nI prefer tests.\n' > "$_tmpdir/avatar/Preferences.md"
-printf -- '---\ntitle: Test Goals\n---\n\n# Goals\n\nGoal: pass all tests.\n' > "$_tmpdir/avatar/Goals.md"
+mkdir -p "$_tmpdir/Resources/Avatar"
+mkdir -p "$_tmpdir/Orchestration"
+printf -- '---\ntitle: Test Identity\n---\n\n# Identity\n\nI am a test user.\n' > "$_tmpdir/Resources/Avatar/Identity.md"
+printf -- '---\ntitle: Test Preferences\n---\n\n# Preferences\n\nI prefer tests.\n' > "$_tmpdir/Resources/Avatar/Preferences.md"
+printf -- '---\ntitle: Test Goals\n---\n\n# Goals\n\nGoal: pass all tests.\n' > "$_tmpdir/Resources/Avatar/Goals.md"
 
-result=$(AVATAR_ROOT="$_tmpdir/avatar" bash "$MODULE_ROOT/hooks/session-start.sh" 2>/dev/null) || true
+result=$(FORGE_USER_ROOT="$_tmpdir" bash "$MODULE_ROOT/hooks/SessionStart.sh" 2>/dev/null) || true
 assert_contains "session-start: emits Identity section" "## Identity" "$result"
 assert_contains "session-start: emits Preferences section" "## Preferences" "$result"
-assert_contains "session-start: emits Goals section" "## Goals" "$result"
 assert_contains "session-start: Identity content" "I am a test user" "$result"
 assert_not_contains "session-start: frontmatter stripped" "title: Test Identity" "$result"
 
-# Non-existent avatar root → exits 0 with no output
+# Self-knowledge sections should NOT be in hook output (on-demand via /LoadAvatar)
+for section in Goals Faultlines Beliefs Strategies Models Narratives Challenges Frames; do
+  assert_not_contains "session-start: no $section section" "## $section" "$result"
+done
+
+# Non-existent user root → exits 0 with no output
 setup
-result=$(AVATAR_ROOT="$_tmpdir/nonexistent" bash "$MODULE_ROOT/hooks/session-start.sh" 2>/dev/null) || true
-assert_eq "session-start: missing avatar root → empty output" "" "$result"
+result=$(FORGE_USER_ROOT="$_tmpdir/nonexistent" bash "$MODULE_ROOT/hooks/SessionStart.sh" 2>/dev/null) || true
+assert_eq "session-start: missing user root → empty output" "" "$result"
 
 exit_code=0
-AVATAR_ROOT="$_tmpdir/nonexistent" bash "$MODULE_ROOT/hooks/session-start.sh" >/dev/null 2>&1 || exit_code=$?
-assert_eq "session-start: missing avatar root → exits 0" "0" "$exit_code"
+FORGE_USER_ROOT="$_tmpdir/nonexistent" bash "$MODULE_ROOT/hooks/SessionStart.sh" >/dev/null 2>&1 || exit_code=$?
+assert_eq "session-start: missing user root → exits 0" "0" "$exit_code"
 
 # ============================================================
 # Naming consistency

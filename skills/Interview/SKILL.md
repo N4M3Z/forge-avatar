@@ -52,9 +52,14 @@ Assemble a single document following the [Project File Format](#project-file-for
 
 Write to `Scratch/interview-project.md`.
 
+Copy to clipboard automatically:
+```bash
+pbcopy < Scratch/interview-project.md
+```
+
 Report:
 - File path and word count
-- Instructions: "Upload this file to your Claude Project (Project Knowledge) or ChatGPT Project (Project Instructions). Update it when your goals or identity change significantly. Then use `/Interview <topic>` to prepare per-session briefs."
+- "Project file copied to clipboard. Upload to your Claude Project (Project Knowledge) or ChatGPT Project (Project Instructions). Update it when your goals or identity change significantly. Then use `/Interview <topic>` to prepare per-session briefs."
 
 ---
 
@@ -73,6 +78,8 @@ Ask two questions:
 ### Step 2: Search vault and read matching content
 
 Two passes — search first, then read. **Every item that makes it into the brief must have its content read, not just its filename.**
+
+**Pre-scan — Build glossary**: Before searching, scan all project knowledge already loaded in the session (avatar, session context, previously read vault content) and build a lookup table of abbreviations, module names, project names, and technical terms. Extract up to 15 entries mapping short forms to full meanings (e.g., `forge-tlp` → "TLP file access control", `DCI` → "Dynamic Context Injection"). Flag terms with vault-specific vs. general meanings — these need clarification during the interview. The glossary is a build-time artifact used in Step 5 to expand terms inline on first use.
 
 **Pass 1 — Search**: Find matching files across these locations:
 
@@ -132,19 +139,25 @@ Assemble the four-section document (see [Output Format](#output-format)). Apply 
 
 - **Strip all frontmatter** from included content
 - **Convert wikilinks** to plain text (`[[Note]]` becomes `Note`)
+- **Expand abbreviations inline** — on first use of any term from the Step 2 glossary, write the full form followed by the short form in parentheses (e.g., "Traffic Light Protocol (TLP)"). Subsequent uses can use the short form alone. This eliminates the need for a separate glossary section.
 - **Substantive summaries, not titles** — every item in the Background Context section must be a paragraph (2-4 sentences, 20 content words minimum — excluding a, the, and, or, of, in, to, for, is, it) capturing the what, why, and current status. A list of titles is a failure mode — the voice AI cannot discuss items it knows nothing about.
 - **Enforce word budget** — total document under 2000 words. If context exceeds this, **cut items, don't shorten summaries**. 10 well-described items beat 30 titles. Prioritize: interview guide (with embedded context) > most relevant background > avatar summary > remaining background
 - **Questions are self-contained** — each interview question must include enough inline context that the voice AI can discuss it without referring back to the Background section. Redundancy between Background and Interview Guide is acceptable and expected.
 - **Plain text only** — no Obsidian syntax, no YAML, no code blocks in the background section
 
-### Step 6: Write and report
+### Step 6: Write, copy, and report
 
 Write the compiled document to `Scratch/interview-<slug>.md` where `<slug>` is the topic lowercased with spaces replaced by hyphens.
+
+Copy to clipboard automatically:
+```bash
+pbcopy < Scratch/interview-<slug>.md
+```
 
 Report:
 - File path
 - Word count
-- Tip: "Paste the full document into your voice AI as the first message or system prompt. When done, run `/Interview process` to import results."
+- "Brief copied to clipboard. Paste into your voice AI (Cmd+V) or push to a remote session with `claude --remote`. When done, run `/Interview process` to import results."
 
 ---
 
@@ -329,7 +342,8 @@ Plain text.>
 ### Communication Style
 - Ask one question at a time, wait for the answer
 - Push back if answers are vague — ask for specifics
-- Summarize each topic before moving to the next
+- Summarize each completed topic in one sentence before moving on. Do not revisit summarized topics unless the user explicitly reopens them.
+- When a term could have vault-specific vs. general meaning, ask directly: "When you say [term], do you mean [vault meaning] or [general meaning]?" Never assume.
 - Capture ideas that emerge naturally — tag them for later
 
 ## Output Specification

@@ -1,0 +1,3 @@
+name: RefineIdentity
+description: "Refine, interview, and export the user's digital identity — goals, beliefs, challenges, strategies, and self-knowledge. USE WHEN refine identity, sharpen beliefs, interview identity, update goals, export identity, import identity, refine goals, challenge assumptions, identity interview, identity export."
+argument-hint: "[interview | refine | export | import | section-name]"

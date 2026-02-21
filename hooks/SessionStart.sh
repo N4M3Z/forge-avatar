@@ -32,19 +32,3 @@ for file in Identity.md Preferences.md; do
     echo
   fi
 done
-
-# Self-knowledge: one directory per category, one file per item
-for dir in Goals Faultlines Beliefs Strategies Models Narratives Challenges Frames; do
-  if [ -d "$AVATAR/$dir" ]; then
-    echo "## $dir"
-    for file in "$AVATAR/$dir"/*.md; do
-      if [ -f "$file" ]; then
-        # Skip folder notes (collection MoCs)
-        basename="${file##*/}"
-        if [ "${basename%.md}" = "$dir" ]; then continue; fi
-        strip_front "$file"
-        echo
-      fi
-    done
-  fi
-done
