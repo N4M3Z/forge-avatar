@@ -143,6 +143,13 @@ Assemble the four-section document (see [Output Format](#output-format)). Apply 
 - **Substantive summaries, not titles** — every item in the Background Context section must be a paragraph (2-4 sentences, 20 content words minimum — excluding a, the, and, or, of, in, to, for, is, it) capturing the what, why, and current status. A list of titles is a failure mode — the voice AI cannot discuss items it knows nothing about.
 - **Enforce word budget** — total document under 2000 words. If context exceeds this, **cut items, don't shorten summaries**. 10 well-described items beat 30 titles. Prioritize: interview guide (with embedded context) > most relevant background > avatar summary > remaining background
 - **Questions are self-contained** — each interview question must include enough inline context that the voice AI can discuss it without referring back to the Background section. Redundancy between Background and Interview Guide is acceptable and expected.
+- **No indexed headings** — strip `IDEA-N`, `D1-D5`, `Cluster A` prefixes from all headings. Use descriptive names the voice AI can read naturally: "Safari Reading List Integration" not "IDEA-4: Safari Reading List". The interviewing AI tracks position by heading name, not index number.
+- **No tables for discussion content** — convert any tabular content into narrative prose with headings. The voice AI will either skip tables entirely or read them badly. Tables in earlier steps (search, scope refinement) are fine — they are for Claude Code internally. The compiled brief must be table-free.
+- **No file extensions or paths in headings** — "the Agent Sync Script" not "sync-agents.sh". The voice AI reads these aloud ("sync dash agents dot s h") which is meaningless in conversation. Paths in body text only when operationally relevant to the decision being made.
+- **No cross-references between sections** — each background item and each question must be self-contained. "See above", "as discussed in the Background section", and "refer to item X" are banned. If two items are related, state the relationship explicitly within each section.
+- **Frame decisions as tensions** — every item needing a decision gets a "the tension here is between X and Y" framing, not a binary "promote or dismiss?" The real options are: promote to a specific artifact type, dismiss with reasoning, defer with revisit conditions, split, or merge with a related item.
+- **Include "why this matters"** — one sentence after every item description, before decision context. Without this, the voice AI asks flat questions ("should we promote this?") instead of substantive ones ("this would change how every skill loads — is that worth the disruption?").
+- **Group by decision type** — quick decisions first (items where the answer is obviously promote, dismiss, or defer — the voice AI can batch these), then architecture decisions (need real discussion), then blocked or external items (acknowledge and move on). Never mix items of different complexity in the same group.
 - **Plain text only** — no Obsidian syntax, no YAML, no code blocks in the background section
 
 ### Step 6: Write, copy, and report
@@ -173,11 +180,11 @@ Parse the pasted output by `###` section headings and map to vault locations:
 
 | Output Section | Vault Destination | Write Method |
 |----------------|-------------------|-------------|
-| Decisions | `Orchestration/Memory/Imperatives/<title>.md` | safe-write write |
-| Insights | `Orchestration/Memory/Insights/<title>.md` | safe-write write |
-| Ideas | `Orchestration/Memory/Ideas/<title>.md` | safe-write write |
+| Decisions | `Orchestration/Memory/Imperatives/<title>.md` | Write tool |
+| Insights | `Orchestration/Memory/Insights/<title>.md` | Write tool |
+| Ideas | `Orchestration/Memory/Ideas/<title>.md` | Write tool |
 | Updated Beliefs | `Resources/Avatar/Beliefs/<existing>.md` | safe-write edit |
-| Action Items | `Orchestration/Backlog.md` | safe-write insert |
+| Action Items | `Orchestration/Backlog.md` | Edit tool |
 | Raw Notes | `Scratch/interview-<slug>-notes.md` | Write tool |
 
 For memory files (Decisions, Insights, Ideas), use the templates from `/SessionReflect` — matching frontmatter schema with `title:`, `tags:`, `keywords:`, `collection:`, `created:`, `status:`.
@@ -203,9 +210,9 @@ Never auto-apply. The user confirms, adjusts individual items, or skips entries.
 ### Step 4: Execute writes
 
 For each confirmed item:
-- **Memory files**: Create via `safe-write write` with full frontmatter (see SessionReflect templates)
+- **Memory files**: Create via Write tool with full frontmatter (see SessionReflect templates)
 - **Avatar updates**: Update via `safe-write edit` — change body text, bump `updated:` date
-- **Backlog items**: Append via `safe-write insert --before` the appropriate section marker
+- **Backlog items**: Append via Edit tool
 - **Raw notes**: Write to `Scratch/` via Write tool
 
 ### Step 5: Report
@@ -342,31 +349,49 @@ Plain text.>
 ### Communication Style
 - Ask one question at a time, wait for the answer
 - Push back if answers are vague — ask for specifics
+- Keep responses short — two to four sentences maximum unless the user asks for more detail
 - Summarize each completed topic in one sentence before moving on. Do not revisit summarized topics unless the user explicitly reopens them.
 - When a term could have vault-specific vs. general meaning, ask directly: "When you say [term], do you mean [vault meaning] or [general meaning]?" Never assume.
-- Capture ideas that emerge naturally — tag them for later
+- Capture ideas that emerge naturally — say "that's a new idea — I'm tagging it for later" and move on without derailing the current topic
+- After every four to five decisions, do a brief progress checkpoint — state how many items decided, how many remain, and whether themes are emerging (two sentences max)
+- If the user goes on a productive tangent, follow it. When it concludes, bring the conversation back to the next undecided item
+- If the user goes circular, name it: "we're covering ground we've already decided on — should I move to the next item?"
+- Never read file extensions, paths, or technical abbreviations aloud unless the user introduced them first. Say "the insight enforcement hook" not "insight dot r s"
+- Never read table contents aloud — if a table exists in the document, summarize its key point in one sentence
+- When the user says "you tell me what's next" — just say what's next. Don't ask the user to choose. Read the next heading, give one sentence of context, and ask the decision question
 
 ## Output Specification
 
-When the interview concludes, produce a summary in this exact format:
+When the interview concludes, produce a summary in narrative format. No indexed lists — each item gets a descriptive heading and prose.
 
 ### Decisions
-- D1: <decision statement> — Rationale: <why> — Action: <next step>
+
+Each decision gets its own heading. The heading is the name of the thing decided, not a number. Under the heading: what was decided, why, and what happens next. One paragraph per decision.
+
+Example:
+
+#### Safari Reading List Integration
+Promoted to a project in forge-apple. The shell script wrapper stays platform-specific because OSA integration is inherently macOS-only. The surfacing module calls it as an optional dependency during weekly reviews. If forge-apple is not installed, surfacing no-ops gracefully.
 
 ### Insights
-- I1: <factual finding or learning> — Origin: <what prompted this>
+
+New insights that emerged during the conversation — things realized or articulated that were not in the original document. Each insight gets a heading describing the finding, followed by one paragraph explaining what prompted it and why it matters.
 
 ### Ideas
-- IDEA1: <idea title> — <one-line description>
+
+Ideas that surfaced during discussion but were not in the original document. Each gets a heading and one sentence describing what it is and why it came up.
 
 ### Updated Beliefs
-- <existing ID, e.g. B5>: <revised statement> — Changed from: <previous version>
+
+If any existing belief (B1, FL3, etc.) was revised, state the item ID, the revised statement, and what changed. One paragraph per update.
 
 ### Action Items
-- [ ] <task> — <owner or context>
+
+Concrete next steps. Each item is a single sentence describing the task and where it happens. Group by context (projects to create, items to archive, rules to write, conventions to document) using subheadings.
 
 ### Raw Notes
-<Anything else notable from the conversation>
+
+Anything else notable — tensions not resolved, questions needing follow-up, observations about how the session went. Narrative prose.
 ```
 
 ---
@@ -384,5 +409,5 @@ When the interview concludes, produce a summary in this exact format:
 - **Content density over coverage** — the voice AI has no vault access. Everything it needs to discuss must be in the brief with enough substance to hold a conversation. Never list titles without summaries. Never reference content that isn't included. If you can't fit substantive summaries within the word budget, include fewer items — not thinner summaries
 - **Cap brief items at 15-20** — if the search finds more matches, curate the most relevant subset. Group related items (e.g., "5 imperatives about skills architecture") into a single entry with all the detail inline, rather than listing 5 separate titles
 - Include avatar context filtered by topic relevance, not the full export
-- Decision/Insight/Idea IDs (D1, I1, IDEA1) are session-local — distinct from avatar IDs (B1, FL3)
+- Output uses narrative headings (descriptive names), not indexed IDs (D1, I1, IDEA1). Avatar IDs (B1, FL3) are the exception — keep them when referencing existing avatar items for traceability
 - The interview document is platform-agnostic — one format for Claude, ChatGPT, Gemini, or any voice AI
